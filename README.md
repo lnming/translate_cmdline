@@ -1,16 +1,24 @@
-#api
-###首先调用
+# api
+
+### 首先调用
+
 `http://fanyi.baidu.com/sug?kw=被翻译的词语`
+
     返回
+
     ```
     {
         "errno":1,
         "data":[]
     }
     ```
-###再调用
+
+### 再调用
+
 `http://fanyi.baidu.com/langdetect?query=被翻译的词语`
+
     返回
+
     ```
     {
         "error":0,
@@ -18,9 +26,13 @@
         "lan":"en"
     }
     ```
+
     从lan项可以获取翻译词语的语言种类
-###最后
+
+### 最后
+
 `http://fanyi.baidu.com/v2transapi? + 以下表单数据`
+
     ```
     {
         'from': 'zh', 
@@ -29,8 +41,9 @@
         'transtype': 'realtime'
     }
     ```
+
     返回
-    json格式
+
     ```
     {
         'trans_result': 

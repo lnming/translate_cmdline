@@ -43,10 +43,14 @@ class Translater():
         if self.result.get('error') == 999:
             raise 'Translate Error'
         self.quick = self.result['trans_result']['data'][0]['result'][0][1]
-        #tongyi = self.result['trans_result']['keywords'][0] 
-        #查询的同义词不一定是所查的短语，所以返回列表，第一项为所查词语，
-        # 第二项为同义词
-        #self.tongyi  = [tongyi[1], tongyi[0]]
+
+        try:
+            self.tongyi = self.result['dict_result']['simple_means']
+            #查询的同义词不一定是所查的短语，所以返回列表，第一项为所查词语，
+            # 第二项为同义词
+        except:
+            self.tongyi = None
+
         try:  #有些词没有例句
             liju = json.loads(self.result['liju_result']['double'])
             #json好像不会自动解析[]结构的数据，需要再次调用

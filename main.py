@@ -18,6 +18,16 @@ def finput(*args, **kargs):
 
 def show(tran):
     fprint('翻译结果：' + tran.quick)
+
+    try:
+        s = ''
+        if tran.tongyi != None:
+            s += '其他含义：\n'
+            for x in tran.tongyi['word_means']:
+                s += '\t{}\n'.format(x)
+        fprint(s)
+    except:
+        pass
     if(tran.liju == None):
         return 
     else:
@@ -27,8 +37,9 @@ def show(tran):
                 key = finput()
                 if(key == 'q'):
                     break
-                if(key == '\x0c'): #Ctrl-L
+                if(key == 'c'): #清屏
                     system('clear')
+                    continue
                 fprint(' [{}]原句：{}'.format(x, tran.liju[x][0]))
                 fprint('    译句：' + tran.liju[x][1])
                 fprint('    来源：' + tran.liju[x][2])
@@ -42,6 +53,9 @@ while(1):
         info = [x for x in finput('输入词条及语言，用空格隔开：').split(' ') if x != '']
         if(info == ['q']): #退出 
             break
+        if(info == ['c']): #清屏
+            system('clear')
+            continue
         if(info == []): #没有输入
             continue
         t.tran(*info) # 翻译

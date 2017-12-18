@@ -6,8 +6,6 @@ from sys import argv
 
 t = api.Translater()
 
-#t.tran(*argv[1:])
-
 def fprint(*args, **kargs):
     print('>>>', end = ' ')
     print(*args, **kargs)

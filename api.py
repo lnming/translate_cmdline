@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/python3
 import requests
 import json
 from sys import argv
@@ -11,32 +11,25 @@ class Translater():
         self.quick = None
         self.liju = None
         self.error = 0
-        
+
     def tran(self, word, from_lang='auto', to_lang=None):
-            self.requests.post('http://fanyi.baidu.com/sug?kw=' + word)
-            if from_lang == 'auto': #自动检测语言
-                lan_info = json.loads(self.requests.post('http://fanyi.baidu.com/langdetect?query=' + word).text)
-                from_lang = lan_info['lan']
-            else:
-                self.requests.post('http://fanyi.baidu.com/langdetect?query=' + word)
+        self.requests.post('http://fanyi.baidu.com/sug?kw=' + word)
 
-            if from_lang == 'zh' and to_lang == None: #默认将语言调节成不同的
-                to_lang = 'en'
-            elif from_lang == 'en' and to_lang == None: #默认将语言调节成不同的
-                to_lang = 'zh'
+        if from_lang == 'auto': #自动检测语言
+            lan_info = json.loads(self.requests.post('http://fanyi.baidu.com/langdetect?query=' + word).text)
+            from_lang = lan_info['lan']
+        else:
+            self.requests.post('http://fanyi.baidu.com/langdetect?query=' + word)
 
-            if from_lang == to_lang: # 输入是相同的语言
-                raise RuntimeError('The Same Language')
-
-            self.response = self.requests.post('http://fanyi.baidu.com/v2transapi',  #查词
-                    {
-                        'from': from_lang,
-                        'to': to_lang,
-                        'query': word,
-                        'transtype': 'realtime'
+        self.response = self.requests.post('http://fanyi.baidu.com/v2transapi',  #查词
+                {
+                    'from': from_lang,
+                    'to': to_lang,
+                    'query': word,
+                    'transtype': 'realtime'
                     }
                 )
-            self._parse()
+        self._parse()
 
     def _parse(self):
         self.result = json.loads(self.response.text) #解析结果数据
@@ -71,26 +64,3 @@ class Translater():
             except:
                 s += x[0]
         return s
-        #else:
-        #    for x in li:
-        #        s += x[0] 
-        #    return s
-
-#t = Translater()
-#t.tran(argv[1], argv[2], argv[3])
-#print(t.liju[0])
-#t.requ_word("你好")
-#print(t.quick)
-# try:
-#     for x in t.liju:
-#         print(x)
-# except:
-#     print('没有例句')
-
-# def main():
-#     t = translater()
-#     while(1):
-#         raw_in = input(">>> ")
-#         
-#         t.requ_word('')
-# 
